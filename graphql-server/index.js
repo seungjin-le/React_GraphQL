@@ -1,17 +1,30 @@
 const { ApolloServer, gql } = require('apollo-server');
+const { readFileSync } = require('fs')
+const {join} = require('path')
 
 // The GraphQL schema
 const typeDefs = gql`
   type Query {
     "A simple type for getting started!"
-    hello: String
+    hello: String,
+    books:[Book],
+  },
+  type Book {
+    bookId: Int,
+    title: String,
+    message: String,
+    author: String,
+    url: String
   }
 `;
 
 // A map of functions which return data for the schema.
 const resolvers = {
   Query: {
-    hello: () => 'Hello World'
+    hello: () => 'Hello World',
+    books: () => {
+      return JSON.parse(readFileSync(join(__dirname, "books.json")).toString());
+    },
   },
 };
 

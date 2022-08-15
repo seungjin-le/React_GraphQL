@@ -16,7 +16,7 @@
   
   "After change": "Before change",
   "scripts": {
-    "dev": "nodemon index.jsx"
+    "dev": "nodemon index.js"
   }
 }
 ```
