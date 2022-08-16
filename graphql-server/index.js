@@ -6,8 +6,9 @@ const {join} = require('path')
 const typeDefs = gql`
   type Query {
     "A simple type for getting started!"
-    hello: String,
-    books:[Book],
+    hello: String
+    books:[Book]
+    book(bookId : Int) : Book
   },
   type Book {
     bookId: Int,
@@ -24,6 +25,11 @@ const resolvers = {
     hello: () => 'Hello World',
     books: () => {
       return JSON.parse(readFileSync(join(__dirname, "books.json")).toString());
+    },
+    book:(parent, args, context, info) => {
+      const books = JSON.parse(readFileSync(join(__dirname, "books.json")).toString());
+      console.log(parent, args, context, info)
+      return books.find(book => book.bookId === args.bookId);
     },
   },
 };

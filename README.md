@@ -132,3 +132,41 @@ GraphQL에서 사용하는 스키마의 대한 정의를 하는 곳이며 클라
 + ### resolver(s)
   + #### Schema(스키마)에 해당하는 구현을 하는 곳
   + #### 요청을 받아 데이터를 조회, 수정, 삭제를 하는 곳
+
+## 특정 데이터 조회
++ #### bookId를 받아오는 쿼리 작성 
+  ```javascript
+  const typeDefs = gql`
+    type Query {
+      hello: String
+      books:[Book]
+      
+      // bookId를 받아오는 쿼리
+      book(bookId : Int) : Book
+      
+    },
+    type Book {
+      bookId: Int,
+      title: String,
+      message: String,
+      author: String,
+      url: String
+    }
+  `;
+  ```
+  
++ #### bookId를 받아 데이터를 찾아 리턴 하는 함수 작성
+  ```javascript
+  const resolvers = {
+    Query: {
+      hello: () => 'Hello World',
+      books: () => {
+        return JSON.parse(readFileSync(join(__dirname, "books.json")).toString());
+      },
+      book:(parent, args, context, info) => {
+        const books = JSON.parse(readFileSync(join(__dirname, "books.json")).toString());
+        return books.find(book => book.bookId === args.bookId);
+      },
+    },
+  };
+  ```
