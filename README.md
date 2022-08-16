@@ -170,3 +170,26 @@ GraphQL에서 사용하는 스키마의 대한 정의를 하는 곳이며 클라
     },
   };
   ```
+  
+## 데이터 추가
++ #### 데이터를 추가하는 스키마 작성
+  ```javascript
+  const typeDefs = gql`
+    type Query {
+      "A simple type for getting started!"
+      hello: String
+      books: [Book]
+      book(bookId: Int): Book
+    }
+    type Mutation {
+      addBook(title: String, message: String, author: String, url: String): Book
+    }
+    type Book {
+      bookId: Int
+      title: String
+      message: String
+      author: String
+      url: String
+    }
+  `;
+  ```
