@@ -172,24 +172,64 @@ GraphQL에서 사용하는 스키마의 대한 정의를 하는 곳이며 클라
   ```
   
 ## 데이터 추가
-+ #### 데이터를 추가하는 스키마 작성
++ #### 데이터를 추가하는 쿼리 작성
   ```javascript
   const typeDefs = gql`
-    type Query {
-      "A simple type for getting started!"
-      hello: String
-      books: [Book]
-      book(bookId: Int): Book
-    }
     type Mutation {
       addBook(title: String, message: String, author: String, url: String): Book
     }
-    type Book {
-      bookId: Int
-      title: String
-      message: String
-      author: String
-      url: String
+  `;
+  ```
++ #### 데이터를 받아와 기존의 bookId +1을 가진 새로운 객체를 만들어 받아온 데이터를 새로운 객체에 추가 하는 함수를 작성. 
+  ```javascript
+  const resolvers = {
+    Mutation: {
+      addBook: (parent, args, context, info) => {
+        const books = JSON.parse(
+          readFileSync(join(__dirname, 'books.json')).toString()
+        );
+        const maxId = Math.max(...books.map((book) => book.bookId));
+        const newBook = { bookId: maxId + 1, ...args };
+        writeFileSync(
+          join(__dirname, 'books.json'),
+          JSON.stringify([...books, newBook])
+        );
+        return newBook;
+      },
+    },
+  };
+  ```
+## 특정 데이터 삭제
++ #### 특정 데이터의 bookId를 받아오는 쿼리 작성
+  ```javascript
+  const typeDefs = gql`
+    type Mutation {
+      deleteBook(bookId: Int): Book
     }
   `;
+  ```
++ #### bookId 데이터를 받아와 받아온 bookId 와 같은 bookId 를 가진 객체 삭제
+  ```javascript
+  const resolvers = {
+    Mutation: {
+      deleteBook: (parent, args, context, info) => {
+        const books = JSON.parse(
+        readFileSync(join(__dirname, 'books.json')).toString()
+        );
+        // 객체 배열 books를 find 함수를 이용해 받아온 bookId와 같은 데이터를 찾아 deletedBook에 할당
+        const deletedBook = books.find((book) => book.bookId === args.bookId);
+        // 객체 배열 books를 filter 함수를 이용해 받아온 bookId와 같은 데이터를 걸러 newBooks에 할당
+        // 할당된 데이터들의 bookId를 0부터 순서대로 재할당 
+        const newBooks = books
+        .filter((book) => book.bookId !== args.bookId)
+        .map((book, index) => {
+          book.bookId = index;
+          return { ...book };
+        });
+        writeFileSync(join(__dirname, 'books.json'), JSON.stringify(newBooks));
+        // 삭제한 데이터를 반환
+        return deletedBook;
+      },
+    },
+  };
   ```

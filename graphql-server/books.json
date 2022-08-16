@@ -1,43 +1,13 @@
 [
   {
-    "bookId": 1,
+    "bookId": 0,
     "title": "test",
     "message": "message test",
     "author": "author test",
     "url": "url test"
   },
-  {
-    "bookId": 2,
-    "title": "test2",
-    "message": "message test2",
-    "author": "author test2",
-    "url": "url test2"
-  },
-  {
-    "bookId": 3,
-    "title": "test",
-    "message": "message test3",
-    "author": "author test3",
-    "url": "url test3"
-  },
-  {
-    "bookId": 4,
-    "title": "test4",
-    "message": "message test4",
-    "author": "author test4",
-    "url": "url test4"
-  },
-  {
-    "bookId": 5,
-    "title": "t",
-    "message": "m",
-    "author": "a",
-    "url": "u"
-  },
-  { "bookId": 6, "title": "t", "message": "m", "author": "a", "url": "u" },
-  { "bookId": 7, "title": "t", "message": "m", "author": "a", "url": "u" },
-  { "bookId": 8, "title": "t", "message": "m", "author": "a", "url": "u" },
-  { "bookId": 9, "title": "t", "message": "m", "author": "a", "url": "u" },
-  { "bookId": 10, "title": "t", "message": "m", "author": "a", "url": "u" },
-  { "bookId": 11, "title": "t", "message": "m", "author": "a", "url": "u" }
+  { "bookId": 1, "title": "t", "message": "m", "author": "a", "url": "u" },
+  { "bookId": 2, "title": "t", "message": "m", "author": "a", "url": "u" },
+  { "bookId": 3, "title": "t", "message": "m", "author": "a", "url": "u" },
+  { "bookId": 4, "title": "t", "message": "m", "author": "a", "url": "u" }
 ]
